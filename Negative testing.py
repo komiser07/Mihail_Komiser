@@ -22,7 +22,6 @@ print("Input Password")
 button_login = driver.find_element(By.ID, 'login-button')
 button_login.click()
 print("Click Login Button")
-print(driver.current_url)
 
 # проверку, что текст ошибки авторизации отображается
 warning_text = driver.find_element(By.XPATH, "//h3[@data-test='error']")
