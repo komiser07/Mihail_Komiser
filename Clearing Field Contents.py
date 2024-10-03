@@ -27,7 +27,7 @@ user_name.send_keys(Keys.DELETE)
 
 # Имитируем нажатие клавиш Ctrl + 'a' для выделения текста в поле password
 password.send_keys(Keys.CONTROL + 'a')
-# Имитируем нажатие клавиш Ctrl + 'a' для выделения текста в поле password
+# Имитируем нажатие клавиш DELETE для выделения текста в поле password
 password.send_keys(Keys.DELETE)
 
 # Добавляем корректные значения логин и пароль.
