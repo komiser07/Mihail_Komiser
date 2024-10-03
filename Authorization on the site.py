@@ -14,7 +14,7 @@ driver.maximize_window()
 user_name = driver.find_element(By.ID, "user-name")
 # помещаем текст "standard_user" в найденный элемент
 user_name.send_keys('standard_user')
-print("Inpyt Login")
+print("Input Login")
 # Находим элемент поля Password  с идентификатором "password"
 password = driver.find_element(By.ID, 'password')
 # помещаем текст "secret_sauce" в найденный элемент
