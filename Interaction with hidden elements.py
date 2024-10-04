@@ -14,7 +14,7 @@ driver.get(base_url)
 driver.maximize_window()
 
 user_name = driver.find_element(By.ID, "user-name")
-user_name.send_keys('standard_user')
+user_name.send_keys("standard_user")
 print("Input Login")
 
 password = driver.find_element(By.ID, 'password')

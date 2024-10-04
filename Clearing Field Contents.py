@@ -14,10 +14,10 @@ base_url = 'https://www.saucedemo.com/'
 driver.get(base_url)
 driver.maximize_window()
 
-user_name = driver.find_element(By.ID, "user-name")
-user_name.send_keys('standard_user')
+user_name = driver.find_element(By.ID, 'user-name')
+user_name.send_keys("standard_u")
 password = driver.find_element(By.ID, 'password')
-password.send_keys("secret_sauce")
+password.send_keys("secret_s")
 
 time.sleep(3)
 # Имитируем нажатие клавиш Ctrl + 'a' для выделения текста в поле user_name
@@ -31,7 +31,7 @@ password.send_keys(Keys.CONTROL + 'a')
 password.send_keys(Keys.DELETE)
 
 # Добавляем корректные значения логин и пароль.
-user_name.send_keys('standard_user')
+user_name.send_keys("standard_user")
 print("Input Login")
 password.send_keys("secret_sauce")
 print("Input Password")
