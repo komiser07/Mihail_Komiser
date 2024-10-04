@@ -118,7 +118,6 @@ assert value_price_product_2 == value_finish_price_product_2
 print('Info Finish Price Product 2 good')
 # Удаление символа "$" из цены
 value_finish_price_product_1 = value_finish_price_product_1.replace("$", "")
-
 value_finish_price_product_2 = value_finish_price_product_2.replace("$", "")
 # Сумма цен обоих товаров
 total_sum = float(value_finish_price_product_1) + float(value_finish_price_product_2)
@@ -137,7 +136,7 @@ print('Total Summary Price good')
 button_finish = driver.find_element(By.XPATH, "//*[@id='finish']")
 button_finish.click()
 print("Enter Button Finish")
-# Проверка что на страницу ест сообщение: "Thank you for your order!"
+# Проверка что на страницу есть сообщение: "Thank you for your order!"
 checkout_complete = driver.find_element(By.XPATH, "//*[contains(text(), 'Thank you for your order!')]")
 value_checkout_complete = checkout_complete.text
 print(value_checkout_complete)
