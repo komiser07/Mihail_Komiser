@@ -25,4 +25,4 @@ button_login = driver.find_element(By.ID, 'login-button')
 # Вызываем метод Click - нажатие на кнопку
 button_login.click()
 print("Click Login Button")
-print(driver.current_url)
+
