@@ -20,7 +20,15 @@ actions = ActionChains(driver)
 slider = driver.find_element(By.XPATH, "//input[@class='slider-color']")
 # задержка в 2 секунды для визуального отслеживания
 time.sleep(2)
-# команда для перемещения выбранного элемента - влево на 500 пикселей
-actions.click_and_hold(slider).move_by_offset(-500, 0).release().perform()
+# команда для перемещения выбранного элемента - влево на 400 пикселей
+actions.click_and_hold(slider).move_by_offset(-400, 0).release().perform()
+slider_now = driver.find_element(By.XPATH, "//span[@style='font-weight:bold;color:red']")
+value_slider_now = slider_now.text
 print("Ползунок перемещён")
-
+print(f"Value: {value_slider_now}")
+# проверка что ползунок двигается и значение value изменяется
+field = driver.find_element(By.XPATH,"//span[@id='f']")
+value_field = field.text
+print(f"Value: {value_field}")
+assert value_field == value_slider_now
+print("Info slider good")
