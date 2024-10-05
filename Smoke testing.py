@@ -97,25 +97,25 @@ finish_product_1 = driver.find_element(By.XPATH, "//a[@id='item_4_title_link']")
 value_finish_product_1 = finish_product_1.text
 print(value_finish_product_1)
 assert value_product_1 == value_finish_product_1
-print('Info Finish Product 1 good')
+print("Info Finish Product 1 good")
 
 finish_product_2 = driver.find_element(By.XPATH, "//a[@id='item_0_title_link']")
 value_finish_product_2 = finish_product_2.text
 print(value_finish_product_2)
 assert value_product_2 == value_finish_product_2
-print('Info Finish Product 2 good')
+print("Info Finish Product 2 good")
 # Проверка цен в оформлении заказа
 price_finish_product_1 = driver.find_element(By.XPATH, "//*[@id='checkout_summary_container']/div/div[1]/div[3]/div[2]/div[2]/div")
 value_finish_price_product_1 = price_finish_product_1.text
 print(value_finish_price_product_1)
 assert value_price_product_1 == value_finish_price_product_1
-print('Info Finish Price Product 1 good')
+print("Info Finish Price Product 1 good")
 
 price_finish_product_2 = driver.find_element(By.XPATH, "//*[@id='checkout_summary_container']/div/div[1]/div[4]/div[2]/div[2]/div")
 value_finish_price_product_2 = price_finish_product_2.text
 print(value_finish_price_product_1)
 assert value_price_product_2 == value_finish_price_product_2
-print('Info Finish Price Product 2 good')
+print("Info Finish Price Product 2 good")
 # Удаление символа "$" из цены
 value_finish_price_product_1 = value_finish_price_product_1.replace("$", "")
 value_finish_price_product_2 = value_finish_price_product_2.replace("$", "")
@@ -131,7 +131,7 @@ print(value_summary_price)
 item_total = f"Item total: ${total_sum}"
 print(item_total)
 assert value_summary_price == item_total
-print('Total Summary Price good')
+print("Total Summary Price good")
 # Переход на страницу Ордер готов - нажатие на кнопку Finish
 button_finish = driver.find_element(By.XPATH, "//*[@id='finish']")
 button_finish.click()
@@ -141,7 +141,7 @@ checkout_complete = driver.find_element(By.XPATH, "//*[contains(text(), 'Thank y
 value_checkout_complete = checkout_complete.text
 print(value_checkout_complete)
 assert value_checkout_complete == 'Thank you for your order!'
-print('Info Order Complete')
+print("Info Order Complete")
 
 
 
