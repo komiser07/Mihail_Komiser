@@ -20,9 +20,16 @@ driver.switch_to.frame(iframe)
 input_pole = driver.find_element(By.XPATH, "//*[@id='__next']/div/div[2]")
 value_pole = input_pole.text
 print(value_pole)
-# выделяем текст
+# выделяем текст и удаляем его
 input_pole.send_keys(Keys.CONTROL + 'a')
+input_pole.send_keys(Keys.DELETE)
 
+# помещаем новый текст в поле
+input_pole.send_keys('Доброе утро')
+value_pole = input_pole.text
+print(value_pole)
+# выделяем новый текст
+input_pole.send_keys(Keys.CONTROL + 'a')
 # нажимаем на все кнопки изменения текста
 click_editing_panel_bold = driver.find_element(By.XPATH, "//button[@title='Bold']").click()
 click_editing_panel_italic = driver.find_element(By.XPATH, "//button[@title='Italic']").click()
