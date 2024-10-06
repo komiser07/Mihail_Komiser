@@ -26,8 +26,8 @@ input_pole.send_keys(Keys.DELETE)
 
 # помещаем новый текст в поле
 input_pole.send_keys('Доброе утро')
-value_pole = input_pole.text
-print(value_pole)
+new_value_pole = input_pole.text
+print(new_value_pole)
 # выделяем новый текст
 input_pole.send_keys(Keys.CONTROL + 'a')
 # нажимаем на все кнопки изменения текста
@@ -44,7 +44,7 @@ value_input_pole = new_input_pole.text
 print(value_input_pole)
 
 # Сравнение строк - до изменения и после
-assert  value_pole == value_input_pole
+assert  new_value_pole == value_input_pole
 print("Редактирование успешно")
 
 
