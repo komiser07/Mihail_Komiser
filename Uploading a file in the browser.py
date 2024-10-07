@@ -14,11 +14,8 @@ driver.maximize_window()
 # прописываем в переменную путь до файла
 path_upload = "D:\\Users\\komis\\PycharmProjects\\Selenium_python\\files_upload\\screenshot2024.10.03-16.27.02.png"
 
-# находим локатор для кнопки "Выберите файл"
-click_button = driver.find_element(By.XPATH, "//*[@id='file']")
-
-# используем метод "send_keys" для загрузки файла
-click_button.send_keys(path_upload)
+# находим локатор для кнопки "Выберите файл" используем метод "send_keys" для загрузки файла
+driver.find_element(By.XPATH, "//*[@id='file']").send_keys(path_upload)
 print("Файл успешно загружен")
 # Получаем имя загруженного файла
 uploaded_file_name = driver.find_element(By.XPATH, "//*[@id='file']").get_attribute('value')
