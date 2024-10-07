@@ -15,7 +15,7 @@ driver.get(base_url)
 driver.maximize_window()
 
 # находим по локатору кнопку "Click for JS Alert" и нажимаем на неё
-click_button_alert = driver.find_element(By.XPATH, "//*[@id='content']/div/ul/li[1]/button").click()
+driver.find_element(By.XPATH, "//*[@id='content']/div/ul/li[1]/button").click()
 print("Click for JS Alert")
 time.sleep(2)
 # подтверждаем наш Alert
@@ -23,7 +23,7 @@ driver.switch_to.alert.accept()
 
 time.sleep(3)
 # находим по локатору кнопку "Click for JS Confirm" и нажимаем на неё
-click_button_confirm = driver.find_element(By.XPATH, "//*[@id='content']/div/ul/li[2]/button").click()
+driver.find_element(By.XPATH, "//*[@id='content']/div/ul/li[2]/button").click()
 print("Click for JS Confirm")
 time.sleep(2)
 # нажимаем Отмена
@@ -31,7 +31,7 @@ driver.switch_to.alert.dismiss()
 
 time.sleep(3)
 # находим по локатору кнопку "Click for JS Prompt" и нажимаем на неё
-click_button_promt = driver.find_element(By.XPATH, "//*[@id='content']/div/ul/li[3]/button").click()
+driver.find_element(By.XPATH, "//*[@id='content']/div/ul/li[3]/button").click()
 print("Click for JS Prompt")
 time.sleep(2)
 # вводим текст сообщения в поле и подтверждаем
