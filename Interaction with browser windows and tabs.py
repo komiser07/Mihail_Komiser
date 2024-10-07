@@ -19,6 +19,7 @@ new_tab.click()
 print("Click Tab")
 # переходим на 2 вкладку
 driver.switch_to.window(driver.window_handles[1])
+print("переключение на 2 вкладку")
 time.sleep(2)
 # переходим на 1 вкладку
 driver.switch_to.window(driver.window_handles[0])
@@ -29,8 +30,11 @@ new_window = driver.find_element(By.XPATH, "//*[@id='windowButton']")
 new_window.click()
 print("Click  New Window")
 # переходим на 2 окно
-driver.switch_to.window(driver.window_handles[1])
-time.sleep(2)
+driver.switch_to.window(driver.window_handles[-1])
+print("переключение на 2 окно")
+time.sleep(4)
+# закрываем 2 окно
+driver.close()
 # переходим на 1 окно
 driver.switch_to.window(driver.window_handles[0])
 
