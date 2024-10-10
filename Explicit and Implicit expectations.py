@@ -37,7 +37,7 @@ products = {
     1: "sauce-labs-backpack",
     2: "sauce-labs-bike-light",
     3: "sauce-labs-bolt-t-shirt",
-    4: "sauce-labs-bleece-jacket",
+    4: "sauce-labs-fleece-jacket",
     5: "sauce-labs-onesie",
     6: "test.allthethings()-t-shirt-(red)"
 }
@@ -95,3 +95,7 @@ print(value_cart_price_product)
 assert value_selected_price == value_cart_price_product
 print("Info Price Cart Product 1 good")
 
+# Переход на страницу Информация о доставке
+checkout = driver.find_element(By.XPATH, "//*[@id='checkout']")
+checkout.click()
+print("Click Checkout")
