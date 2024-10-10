@@ -1,17 +1,18 @@
 import time
 
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.edge.service import Service as EdgeService
 from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-options = webdriver.ChromeOptions()
+options: Options = webdriver.EdgeOptions()
 options.add_experimental_option("detach", True)
 
-driver = webdriver.Chrome(options=options, service=ChromeService(ChromeDriverManager().install()))
+driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
 base_url = 'https://www.saucedemo.com/'
 driver.get(base_url)
 driver.maximize_window()
@@ -81,21 +82,16 @@ curt.click()
 print("Enter Cart")
 
 # Проверка товара в корзине
-cart_product = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//*[@id='item_3_title_link']/div")))
+cart_product = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@class='inventory_item_name']")))
 value_cart_product = cart_product.text
 print(value_cart_product)
-assert selected_product == value_cart_product
+assert value_selected_product == value_cart_product
 print("Info Cart Product good")
-#
+
 # # Проверка цены товара в корзине
-# price_cart_product_1 = driver.find_element(By.XPATH,"//*[@id='cart_contents_container']/div/div[1]/div[3]/div[2]/div[2]/div")
-# value_cart_price_product_1 = price_cart_product_1.text
-# print(value_cart_price_product_1)
-# assert selected_price == value_cart_price_product_1
-# print("Info Price Cart Product 1 good")
-#
-#
-#
+price_cart_product = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH,"//*[@id='cart_contents_container']/div/div[1]/div[3]/div[2]/div[2]/div")))
+value_cart_price_product = price_cart_product.text
+print(value_cart_price_product)
+assert value_selected_price == value_cart_price_product
+print("Info Price Cart Product 1 good")
 
-
-# //*[@id="item_4_title_link"]/div
