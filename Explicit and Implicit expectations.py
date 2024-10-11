@@ -126,7 +126,7 @@ driver.find_element(By.XPATH, "//*[@id='continue']").click()
 print("Click Continue")
 
 # Проверка товаров в оформлении заказа
-finish_product = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@class='inventory_item_name']")))
+finish_product = driver.find_element(By.XPATH, "//*[@class='inventory_item_name']")
 value_finish_product = finish_product.text
 print(value_finish_product)
 assert value_selected_product == value_finish_product
@@ -139,7 +139,24 @@ print(value_finish_price_product)
 assert value_selected_price == value_finish_price_product
 print("Info Finish Price Product good")
 
+summary_price = driver.find_element(By.XPATH, "//*[@id='checkout_summary_container']/div/div[2]/div[6]")
+value_summary_price = summary_price.text
+print(value_summary_price)
+item_total = "Item total: " + value_finish_price_product
+print(item_total)
+assert value_summary_price == item_total
+print("Total Summary Price good")
 
+# Переход на страницу Ордер готов - нажатие на кнопку Finish
+driver.find_element(By.XPATH, "//*[@id='finish']").click()
+print("Enter Button Finish")
+
+# Проверка что на странице есть сообщение: "Thank you for your order!"
+checkout_complete = driver.find_element(By.XPATH, "//*[contains(text(), 'Thank you for your order!')]")
+value_checkout_complete = checkout_complete.text
+print(value_checkout_complete)
+assert value_checkout_complete == 'Thank you for your order!'
+print("Info Order Complete")
 
 
 
