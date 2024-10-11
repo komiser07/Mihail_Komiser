@@ -1,5 +1,6 @@
 import time
 
+from faker import Faker
 from selenium import webdriver
 from selenium.webdriver.edge.options import Options
 from selenium.webdriver.edge.service import Service as EdgeService
@@ -7,7 +8,6 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-
 
 options: Options = webdriver.EdgeOptions()
 options.add_experimental_option("detach", True)
@@ -67,7 +67,8 @@ while True:
 print(f"Выбранный товар: {products[choice]}")
 
 # Находим выбранный товар
-selected_button = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.ID, f"add-to-cart-{products[choice]}")))
+selected_button = WebDriverWait(driver, 5).until(
+    EC.presence_of_element_located((By.ID, f"add-to-cart-{products[choice]}")))
 selected_button.click()
 selected_product = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, f"{item_name[choice]}")))
 value_selected_product = selected_product.text
@@ -82,14 +83,16 @@ curt.click()
 print("Enter Cart")
 
 # Проверка товара в корзине
-cart_product = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH, "//*[@class='inventory_item_name']")))
+cart_product = WebDriverWait(driver, 20).until(
+    EC.presence_of_element_located((By.XPATH, "//*[@class='inventory_item_name']")))
 value_cart_product = cart_product.text
 print(value_cart_product)
 assert value_selected_product == value_cart_product
 print("Info Cart Product good")
 
 # # Проверка цены товара в корзине
-price_cart_product = WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.XPATH,"//*[@id='cart_contents_container']/div/div[1]/div[3]/div[2]/div[2]/div")))
+price_cart_product = WebDriverWait(driver, 20).until(EC.presence_of_element_located(
+    (By.XPATH, "//*[@id='cart_contents_container']/div/div[1]/div[3]/div[2]/div[2]/div")))
 value_cart_price_product = price_cart_product.text
 print(value_cart_price_product)
 assert value_selected_price == value_cart_price_product
@@ -99,3 +102,45 @@ print("Info Price Cart Product 1 good")
 checkout = driver.find_element(By.XPATH, "//*[@id='checkout']")
 checkout.click()
 print("Click Checkout")
+
+# генерация данных о покупателе
+fake = Faker("en_US")
+
+name_first = fake.first_name()
+first_name = driver.find_element(By.XPATH, "//input[@class='input_error form_input']")
+first_name.send_keys(name_first)
+print("Input first_name")
+
+name_last = fake.last_name()
+last_name = driver.find_element(By.XPATH, "//*[@id='last-name']")
+last_name.send_keys(name_last)
+print(f"Input last_name")
+
+zip = fake.postcode()
+postal_code = driver.find_element(By.XPATH, "//*[@id='postal-code']")
+postal_code.send_keys(zip)
+print("Input postal_code")
+
+# Переход на страницу оформления заказа - нажатие на кнопку Continue
+driver.find_element(By.XPATH, "//*[@id='continue']").click()
+print("Click Continue")
+
+# Проверка товаров в оформлении заказа
+finish_product = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@class='inventory_item_name']")))
+value_finish_product = finish_product.text
+print(value_finish_product)
+assert value_selected_product == value_finish_product
+print("Info Finish Product good")
+
+# Проверка цен в оформлении заказа
+price_finish_product = driver.find_element(By.XPATH, "//*[@id='checkout_summary_container']/div/div[1]/div[3]/div[2]/div[2]/div")
+value_finish_price_product = price_finish_product.text
+print(value_finish_price_product)
+assert value_selected_price == value_finish_price_product
+print("Info Finish Price Product good")
+
+
+
+
+
+
