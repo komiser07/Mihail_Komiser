@@ -76,10 +76,13 @@ selected_button.click()
 selected_product = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, f"{item_name[choice]}")))
 value_selected_product = selected_product.text
 print(value_selected_product)
+
 selected_price = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.XPATH, f"{prices[choice]}")))
 value_selected_price = selected_price.text
 print(value_selected_price)
+
 time.sleep(5)
+
 # Переход на страницу Корзина - нажатие на кнопку Curt
 curt = driver.find_element(By.XPATH, "//*[@id='shopping_cart_container']")
 curt.click()
