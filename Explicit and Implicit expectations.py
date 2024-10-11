@@ -11,6 +11,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 options: Options = webdriver.EdgeOptions()
 options.add_experimental_option("detach", True)
+# Открытие браузера в headless режиме
+options.add_argument("--headless")
 
 driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
 base_url = 'https://www.saucedemo.com/'
