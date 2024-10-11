@@ -26,6 +26,7 @@ driver.find_element(By.ID, 'password').send_keys("secret_sauce")
 print("Input Password")
 driver.find_element(By.ID, 'login-button').click()
 print("Click Login Button")
+
 # список товаров
 item_name = {
     1: "//*[@id='item_4_title_link']/div",
@@ -135,7 +136,8 @@ assert value_selected_product == value_finish_product
 print("Info Finish Product good")
 
 # Проверка цен в оформлении заказа
-price_finish_product = driver.find_element(By.XPATH, "//*[@id='checkout_summary_container']/div/div[1]/div[3]/div[2]/div[2]/div")
+price_finish_product = driver.find_element(By.XPATH,
+                                           "//*[@id='checkout_summary_container']/div/div[1]/div[3]/div[2]/div[2]/div")
 value_finish_price_product = price_finish_product.text
 print(value_finish_price_product)
 assert value_selected_price == value_finish_price_product
@@ -159,7 +161,3 @@ value_checkout_complete = checkout_complete.text
 print(value_checkout_complete)
 assert value_checkout_complete == 'Thank you for your order!'
 print("Info Order Complete")
-
-
-
-
