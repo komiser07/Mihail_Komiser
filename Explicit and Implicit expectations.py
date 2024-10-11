@@ -12,7 +12,7 @@ from selenium.webdriver.support import expected_conditions as EC
 options: Options = webdriver.EdgeOptions()
 options.add_experimental_option("detach", True)
 # Открытие браузера в headless режиме
-options.add_argument("--headless")
+# options.add_argument("--headless")
 
 driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
 base_url = 'https://www.saucedemo.com/'
@@ -63,11 +63,11 @@ for key in choices:
 # выбор товара пользователем
 while True:
     choice = int(input("Выберите товар: "))
-    if 1 <= choice <= 6:
+    if choice in choices:
         break
     else:
         print("Товар должен быть выбран из списка от 1 до 6.")
-print(f"Выбранный товар: {products[choice]}")
+print(f"Выбранный товар: {products[choice]}\n")
 
 # Находим выбранный товар
 selected_button = WebDriverWait(driver, 5).until(
@@ -83,7 +83,7 @@ time.sleep(5)
 # Переход на страницу Корзина - нажатие на кнопку Curt
 curt = driver.find_element(By.XPATH, "//*[@id='shopping_cart_container']")
 curt.click()
-print("Enter Cart")
+print("Enter Cart\n")
 
 # Проверка товара в корзине
 cart_product = WebDriverWait(driver, 20).until(
@@ -104,29 +104,26 @@ print("Info Price Cart Product 1 good")
 # Переход на страницу Информация о доставке
 checkout = driver.find_element(By.XPATH, "//*[@id='checkout']")
 checkout.click()
-print("Click Checkout")
+print("Click Checkout\n")
 
 # генерация данных о покупателе
 fake = Faker("en_US")
 
 name_first = fake.first_name()
-first_name = driver.find_element(By.XPATH, "//input[@class='input_error form_input']")
-first_name.send_keys(name_first)
+driver.find_element(By.XPATH, "//input[@class='input_error form_input']").send_keys(name_first)
 print("Input first_name")
 
 name_last = fake.last_name()
-last_name = driver.find_element(By.XPATH, "//*[@id='last-name']")
-last_name.send_keys(name_last)
+driver.find_element(By.XPATH, "//*[@id='last-name']").send_keys(name_last)
 print(f"Input last_name")
 
 zip = fake.postcode()
-postal_code = driver.find_element(By.XPATH, "//*[@id='postal-code']")
-postal_code.send_keys(zip)
+driver.find_element(By.XPATH, "//*[@id='postal-code']").send_keys(zip)
 print("Input postal_code")
 
 # Переход на страницу оформления заказа - нажатие на кнопку Continue
 driver.find_element(By.XPATH, "//*[@id='continue']").click()
-print("Click Continue")
+print("Click Continue\n")
 
 # Проверка товаров в оформлении заказа
 finish_product = driver.find_element(By.XPATH, "//*[@class='inventory_item_name']")
@@ -153,7 +150,7 @@ print("Total Summary Price good")
 
 # Переход на страницу Ордер готов - нажатие на кнопку Finish
 driver.find_element(By.XPATH, "//*[@id='finish']").click()
-print("Enter Button Finish")
+print("Enter Button Finish\n")
 
 # Проверка что на странице есть сообщение: "Thank you for your order!"
 checkout_complete = driver.find_element(By.XPATH, "//*[contains(text(), 'Thank you for your order!')]")
