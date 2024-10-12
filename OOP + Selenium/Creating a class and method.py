@@ -16,7 +16,7 @@ class Test:
         self.driver.maximize_window()
 
         self.driver.find_element(By.ID, "user-name").send_keys('standard_user')
-        print("Input User Name: ")
+        print("Input User Name")
         self.driver.find_element(By.ID, 'password').send_keys("secret_sauce")
         print("Input Password")
         self.driver.find_element(By.ID, 'login-button').click()
