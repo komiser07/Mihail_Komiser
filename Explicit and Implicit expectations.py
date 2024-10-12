@@ -19,7 +19,7 @@ base_url = 'https://www.saucedemo.com/'
 driver.get(base_url)
 driver.maximize_window()
 
-# авторизируемся на сайте
+# авторизуемся на сайте
 driver.find_element(By.ID, "user-name").send_keys('standard_user')
 print("Input Login")
 driver.find_element(By.ID, 'password').send_keys("secret_sauce")
