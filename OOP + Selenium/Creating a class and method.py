@@ -9,15 +9,15 @@ from edge_selenium import options
 # создаём класс для тестирования
 class Test:
     # создаём метод для инициализации драйвера и открытия сайта
-    def __init__(self):
+    def __init__(self, username, password):
         self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
         self.base_url = 'https://www.saucedemo.com/'
         self.driver.get(self.base_url)
         self.driver.maximize_window()
 
-        self.driver.find_element(By.ID, "user-name").send_keys('standard_user')
+        self.driver.find_element(By.ID, "user-name").send_keys(username)
         print("Input User Name")
-        self.driver.find_element(By.ID, 'password').send_keys("secret_sauce")
+        self.driver.find_element(By.ID, 'password').send_keys(password)
         print("Input Password")
         self.driver.find_element(By.ID, 'login-button').click()
         print("Click Login Button")
@@ -28,5 +28,5 @@ class Test:
 
 
 # создаём экземпляр класса и запускаем тест
-start_test = Test()
+start_test = Test('standard_user', 'secret_sauce')
 start_test.quit()
