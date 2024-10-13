@@ -60,4 +60,4 @@ class Test:
 
 # создаём экземпляр класса и запускаем тест
 start_test = Test('standard_user', 'secret_sauce')
-# start_test.quit()
+start_test.quit()
