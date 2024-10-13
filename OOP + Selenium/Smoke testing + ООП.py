@@ -28,7 +28,7 @@ class Test:
         self.initialize_browser()
         self.authorization(login_name, login_password)
         self.select_product()
-        self.Cart()
+        self.cart()
 
     def authorization(self, login_name, login_password):
         self.driver.find_element(By.ID, "user-name").send_keys(login_name)
@@ -44,7 +44,7 @@ class Test:
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
         print("Click Selected Product")
 
-    def Cart(self):
+    def cart(self):
         # Переход на страницу Корзина
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='shopping_cart_container']"))).click()
