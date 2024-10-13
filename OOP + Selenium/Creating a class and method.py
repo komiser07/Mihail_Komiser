@@ -19,15 +19,15 @@ class Test:
         self.driver.quit()
         print("Close Browser")
 
-    # создаём метод для авторизации на сайте
-    def __init__(self, username, password):
+        # создаём метод для авторизации на сайте
+    def __init__(self, login_name, login_password):
         self._initialize_browser()
-        self._authorize(username, password)
+        self.authorization(login_name, login_password)
 
-    def _authorize(self, username, password):
-        self.driver.find_element(By.ID, "user-name").send_keys(username)
+    def authorization(self, login_name, login_password):
+        self.driver.find_element(By.ID, "user-name").send_keys(login_name)
         print("Input User Name")
-        self.driver.find_element(By.ID, 'password').send_keys(password)
+        self.driver.find_element(By.ID, 'password').send_keys(login_password)
         print("Input Password")
         self.driver.find_element(By.ID, 'login-button').click()
         print("Click Login Button")
