@@ -9,20 +9,20 @@ from selenium.webdriver.support import expected_conditions as EC
 
 # создаём класс для тестирования
 class Test:
-
-    # создаём конструктор для инициализации экземпляра теста с логином и паролем
-    def __init__(self, login_name, login_password):
-        self.initialize_browser()
-        self.authorization(login_name, login_password)
-        self.select_product()
-        self.cart_button()
-
+    
     # создаем метод для инициализации браузера
     def initialize_browser(self):
         self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
         base_url = 'https://www.saucedemo.com/'
         self.driver.get(base_url)
         self.driver.maximize_window()
+
+    # создаём конструктор для инициализации экземпляра теста с логином и паролем
+    def __init__(self, login_name, login_password):
+        self.login_name = login_name
+        self.login_password = login_password
+        self.initialize_browser()
+        self.run_test()
 
     # создаём метод для авторизации в системе
     def authorization(self, login_name, login_password):
@@ -51,6 +51,12 @@ class Test:
         value_success_test = success_test.text
         assert value_success_test == 'Your Cart'
         print("Test Success")
+
+        # запускаем тест
+    def run_test(self):
+        self.authorization(login_name=self.login_name, login_password=self.login_password)
+        self.select_product()
+        self.cart_button()
 
     # Создаём метод для закрытия браузера
     def quit(self):
