@@ -10,26 +10,20 @@ from selenium.webdriver.support import expected_conditions as EC
 # создаём класс для тестирования
 class Test:
 
-    def initialize_browser(self):
-        self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-        base_url = 'https://www.saucedemo.com/'
-        self.driver.get(base_url)
-        self.driver.maximize_window()
-
-    # Создаём метод для закрытия браузера
-    def quit(self):
-        self.driver.quit()
-        print("Close Browser")
-
-    print("Start Test")
-
-    # создаём метод для авторизации на сайте
+    # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password):
         self.initialize_browser()
         self.authorization(login_name, login_password)
         self.select_product()
         self.cart_button()
 
+    # создаем метод для инициализации браузера
+    def initialize_browser(self):
+        self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+        base_url = 'https://www.saucedemo.com/'
+        self.driver.get(base_url)
+        self.driver.maximize_window()
+    # создаём метод для авторизации в системе
     def authorization(self, login_name, login_password):
         self.driver.find_element(By.ID, "user-name").send_keys(login_name)
         print("Input User Name")
@@ -44,8 +38,8 @@ class Test:
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
         print("Click Selected Product")
 
+    # Переход на страницу Корзина
     def cart_button(self):
-        # Переход на страницу Корзина
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='shopping_cart_container']"))).click()
         print("Enter Shopping Cart")
@@ -56,6 +50,11 @@ class Test:
         value_success_test = success_test.text
         assert value_success_test == 'Your Cart'
         print("Test Success")
+
+    # Создаём метод для закрытия браузера
+    def quit(self):
+        self.driver.quit()
+        print("Close Browser")
 
 
 # создаём экземпляр класса и запускаем тест
