@@ -18,6 +18,7 @@ class Test():
         base_url = 'https://www.saucedemo.com/'
         driver.get(base_url)
         driver.maximize_window()
+
 # Добавляем модуль `login_page.py` с определением класса `LoginPage` и его методом `authorization()`.
         login = LoginPage(driver)
         login.authorization(login_name='standard_user', login_password='secret_sauce')
