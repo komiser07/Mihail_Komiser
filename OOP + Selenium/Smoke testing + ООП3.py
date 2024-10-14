@@ -12,10 +12,9 @@ class Test:
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password):
-        self.initialize_browser()
-        self.authorization(login_name, login_password)
-        self.select_product()
-        self.cart_button()
+        self.login_name = login_name
+        self.login_password = login_password
+        self.run_test()
 
     # создаем метод для инициализации браузера
     def initialize_browser(self):
@@ -39,7 +38,7 @@ class Test:
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
         print("Click Selected Product")
 
-    # Переход на страницу Корзина
+    # создаём метод для перехода на страницу Корзина
     def cart_button(self):
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='shopping_cart_container']"))).click()
@@ -51,6 +50,13 @@ class Test:
         value_success_test = success_test.text
         assert value_success_test == 'Your Cart'
         print("Test Success")
+
+    # запускаем тест
+    def run_test(self):
+        self.initialize_browser()
+        self.authorization(login_name=self.login_name, login_password=self.login_password)
+        self.select_product()
+        self.cart_button()
 
     # Создаём метод для закрытия браузера
     def quit(self):
