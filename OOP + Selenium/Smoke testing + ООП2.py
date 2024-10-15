@@ -11,10 +11,11 @@ options = webdriver.EdgeOptions()
 options.add_experimental_option("detach", True)
 
 
-class Test():
+class Test:
 
     def test_select_product(self):
         driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+
         base_url = 'https://www.saucedemo.com/'
         driver.get(base_url)
         driver.maximize_window()
