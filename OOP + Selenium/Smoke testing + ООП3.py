@@ -2,31 +2,31 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from edge_selenium import options, driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+options = webdriver.EdgeOptions()
+options.add_experimental_option("detach", True)
+
+driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+driver.maximize_window()
 
 # создаём класс для тестирования
 class Test:
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
-    def __init__(self):
+    def __init__(self, login_name, login_password, base_url):
         self.driver = driver
+        driver.get(base_url)
+        self.login_name = login_name
+        self.login_password = login_password
         self.run_test()
-
-    # создаем метод для инициализации браузера
-    def initialize_browser(self):
-        self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-        base_url = 'https://www.saucedemo.com/'
-        self.driver.get(base_url)
-        self.driver.maximize_window()
 
     # создаём метод для авторизации в системе
     def authorization(self):
-        self.driver.find_element(By.ID, "user-name").send_keys('standard_user')
+        self.driver.find_element(By.ID, "user-name").send_keys(self.login_name)
         print("Input User Name")
-        self.driver.find_element(By.ID, 'password').send_keys('secret_sauce')
+        self.driver.find_element(By.ID, 'password').send_keys(self.login_password)
         print("Input Password")
         self.driver.find_element(By.ID, 'login-button').click()
         print("Click Login Button")
@@ -52,7 +52,6 @@ class Test:
 
     # запускаем тест
     def run_test(self):
-        self.initialize_browser()
         self.authorization()
         self.select_product()
         self.cart_button()
@@ -64,5 +63,5 @@ class Test:
 
 
 # создаём экземпляр класса и запускаем тест
-start_test = Test()
+start_test = Test('standard_user', 'secret_sauce', 'https://www.saucedemo.com/')
 start_test.quit()
