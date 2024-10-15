@@ -2,7 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from edge_selenium import options
+from edge_selenium import options, driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
@@ -11,9 +11,8 @@ from selenium.webdriver.support import expected_conditions as EC
 class Test:
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
-    def __init__(self, login_name, login_password):
-        self.login_name = login_name
-        self.login_password = login_password
+    def __init__(self):
+        self.driver = driver
         self.run_test()
 
     # создаем метод для инициализации браузера
@@ -65,5 +64,5 @@ class Test:
 
 
 # создаём экземпляр класса и запускаем тест
-start_test = Test('standard_user', 'secret_sauce')
+start_test = Test()
 start_test.quit()
