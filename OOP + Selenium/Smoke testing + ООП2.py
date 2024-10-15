@@ -23,8 +23,6 @@ class Test():
         login = LoginPage(driver)
         login.authorization(login_name='standard_user', login_password='secret_sauce')
 
-        print("Start Test")
-
         # выбор товара
         WebDriverWait(driver, 100).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
