@@ -1,43 +1,37 @@
+import self
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
-from edge_selenium import options
+from edge_selenium import options, driver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+from login_page import LoginPage
+
+self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+self.driver.maximize_window()
 
 # создаём класс для тестирования
 class Test:
-    
-    # создаем метод для инициализации браузера
-    def initialize_browser(self):
-        self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-        base_url = 'https://www.saucedemo.com/'
-        self.driver.get(base_url)
-        self.driver.maximize_window()
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
-    def __init__(self, login_name, login_password):
+    def __init__(self, login_name, login_password, base_url):
+        self.driver = driver
+        driver.get(base_url)
         self.login_name = login_name
         self.login_password = login_password
-        self.initialize_browser()
         self.run_test()
 
-    # создаём метод для авторизации в системе
-    def authorization(self, login_name, login_password):
-        self.driver.find_element(By.ID, "user-name").send_keys(login_name)
-        print("Input User Name")
-        self.driver.find_element(By.ID, 'password').send_keys(login_password)
-        print("Input Password")
-        self.driver.find_element(By.ID, 'login-button').click()
-        print("Click Login Button")
+    # Добавляем модуль `login_page.py` с определением класса `LoginPage` и его методом `authorization()`.
+    login = LoginPage(driver)
+    login.authorization(self.login_name, self.login_password)
 
     # создаём метод для выбора товара
     def select_product(self):
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
-        print("Click Selected Product")
+    print("Click Selected Product")
 
     # Переход на страницу Корзина
     def cart_button(self):
@@ -52,9 +46,9 @@ class Test:
         assert value_success_test == 'Your Cart'
         print("Test Success")
 
-        # запускаем тест
+    # запускаем тест
     def run_test(self):
-        self.authorization(login_name=self.login_name, login_password=self.login_password)
+        self.initialize_browser()
         self.select_product()
         self.cart_button()
 
@@ -65,5 +59,5 @@ class Test:
 
 
 # создаём экземпляр класса и запускаем тест
-start_test = Test('standard_user', 'secret_sauce')
+start_test = Test('standard_user', 'secret_sauce', 'https://www.saucedemo.com/')
 start_test.quit()
