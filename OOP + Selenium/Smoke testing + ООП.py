@@ -9,8 +9,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from login_page import LoginPage
 
-self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-self.driver.maximize_window()
+driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+driver.maximize_window()
 
 # создаём класс для тестирования
 class Test:
