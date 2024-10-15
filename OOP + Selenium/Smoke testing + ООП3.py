@@ -24,10 +24,10 @@ class Test:
         self.driver.maximize_window()
 
     # создаём метод для авторизации в системе
-    def authorization(self, login_name, login_password):
-        self.driver.find_element(By.ID, "user-name").send_keys(login_name)
+    def authorization(self):
+        self.driver.find_element(By.ID, "user-name").send_keys('standard_user')
         print("Input User Name")
-        self.driver.find_element(By.ID, 'password').send_keys(login_password)
+        self.driver.find_element(By.ID, 'password').send_keys('secret_sauce')
         print("Input Password")
         self.driver.find_element(By.ID, 'login-button').click()
         print("Click Login Button")
@@ -54,7 +54,7 @@ class Test:
     # запускаем тест
     def run_test(self):
         self.initialize_browser()
-        self.authorization(login_name=self.login_name, login_password=self.login_password)
+        self.authorization()
         self.select_product()
         self.cart_button()
 
