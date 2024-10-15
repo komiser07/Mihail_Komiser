@@ -8,22 +8,26 @@ from selenium.webdriver.support import expected_conditions as EC
 options = webdriver.EdgeOptions()
 options.add_experimental_option("detach", True)
 
-driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-driver.maximize_window()
 
 # создаём класс для тестирования
 class Test:
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password, base_url):
-        self.driver = driver
-        driver.get(base_url)
+        self.base_url = base_url
+        self.driver = self.setup_driver()
         self.login_name = login_name
         self.login_password = login_password
         self.run_test()
 
+    def setup_driver(self):
+        driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+        driver.maximize_window()
+        return driver
+
     # создаём метод для авторизации в системе
     def authorization(self):
+        self.driver.get(self.base_url)
         self.driver.find_element(By.ID, "user-name").send_keys(self.login_name)
         print("Input User Name")
         self.driver.find_element(By.ID, 'password').send_keys(self.login_password)
