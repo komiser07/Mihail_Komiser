@@ -1,4 +1,5 @@
 from selenium import webdriver
+from login_page import LoginPage
 from selenium.webdriver.common.by import By
 from selenium.webdriver.edge.service import Service as EdgeService
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
@@ -11,10 +12,12 @@ class Test:
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password, base_url):
-        self.base_url = base_url
         self.driver = self.setup_driver()
+        self.base_url = base_url
+        self.driver.get(self.base_url)
         self.login_name = login_name
         self.login_password = login_password
+        self.login = LoginPage(self.driver)
         self.run_test()
 
     def setup_driver(self):
@@ -23,16 +26,6 @@ class Test:
         driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
         driver.maximize_window()
         return driver
-
-    # создаём метод для авторизации в системе
-    def authorization(self):
-        self.driver.get(self.base_url)
-        self.driver.find_element(By.ID, "user-name").send_keys(self.login_name)
-        print("Input User Name")
-        self.driver.find_element(By.ID, 'password').send_keys(self.login_password)
-        print("Input Password")
-        self.driver.find_element(By.ID, 'login-button').click()
-        print("Click Login Button")
 
     # создаём метод для выбора товара
     def select_product(self):
@@ -55,7 +48,7 @@ class Test:
 
     # запускаем тест
     def run_test(self):
-        self.authorization()
+        self.login.authorization(self.login_name, self.login_password)
         self.select_product()
         self.cart_button()
 
