@@ -15,12 +15,11 @@ class Test:
 
     def test_select_product(self):
         driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-
         base_url = 'https://www.saucedemo.com/'
         driver.get(base_url)
         driver.maximize_window()
 
-# Добавляем модуль `login_page.py` с определением класса `LoginPage` и его методом `authorization()`.
+        # Добавляем модуль `login_page.py` с определением класса `LoginPage` и его методом `authorization()`.
         login = LoginPage(driver)
         login.authorization(login_name='standard_user', login_password='secret_sauce')
 
@@ -28,10 +27,12 @@ class Test:
         WebDriverWait(driver, 100).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
         print("Click Selected Product")
+
         # Переход на страницу Корзина
         WebDriverWait(driver, 100).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='shopping_cart_container']"))).click()
         print("Enter Shopping Cart")
+
         # Проверка что находится текст "Your Cart" на странице Корзина
         success_test = WebDriverWait(driver, 100).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='header_container']/div[2]/span")))
