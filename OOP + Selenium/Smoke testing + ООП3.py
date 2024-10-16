@@ -5,9 +5,6 @@ from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-options = webdriver.EdgeOptions()
-options.add_experimental_option("detach", True)
-
 
 # создаём класс для тестирования
 class Test:
@@ -21,6 +18,8 @@ class Test:
         self.run_test()
 
     def setup_driver(self):
+        options = webdriver.EdgeOptions()
+        options.add_experimental_option("detach", True)
         driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
         driver.maximize_window()
         return driver
