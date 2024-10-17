@@ -7,12 +7,20 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
+def setup_driver():
+    options = webdriver.EdgeOptions()
+    options.add_experimental_option("detach", True)
+    driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+    driver.maximize_window()
+    return driver
+
+
 # создаём класс для тестирования
 class Test:
 
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password, base_url):
-        self.driver = self.setup_driver()
+        self.driver = setup_driver()
         self.base_url = base_url
         self.driver.get(self.base_url)
         self.login_name = login_name
@@ -20,26 +28,16 @@ class Test:
         self.login = LoginPage(self.driver)
         self.run_test()
 
-    def setup_driver(self):
-        options = webdriver.EdgeOptions()
-        options.add_experimental_option("detach", True)
-        driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-        driver.maximize_window()
-        return driver
-
-    # создаём метод для выбора товара
+    # создаём метод для выбора товара и перехода на страницу Корзина
     def select_product(self):
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
         print("Click Selected Product")
-
-    # создаём метод для перехода на страницу Корзина
-    def cart_button(self):
         WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='shopping_cart_container']"))).click()
         print("Enter Shopping Cart")
 
-        # Проверка что находится текст "Your Cart" на странице Корзина
+    def checking_cart(self):
         success_test = WebDriverWait(self.driver, 30).until(
             EC.presence_of_element_located((By.XPATH, "//*[@id='header_container']/div[2]/span")))
         value_success_test = success_test.text
@@ -50,7 +48,7 @@ class Test:
     def run_test(self):
         self.login.authorization(self.login_name, self.login_password)
         self.select_product()
-        self.cart_button()
+        self.checking_cart()
 
     # Создаём метод для закрытия браузера
     def quit(self):
