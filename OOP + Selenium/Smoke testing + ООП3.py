@@ -7,20 +7,19 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-def setup_driver():
-    options = webdriver.EdgeOptions()
-    options.add_experimental_option("detach", True)
-    driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-    driver.maximize_window()
-    return driver
-
-
 # создаём класс для тестирования
 class Test:
 
+    def setup_driver(self):
+        options = webdriver.EdgeOptions()
+        options.add_experimental_option("detach", True)
+        driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+        driver.maximize_window()
+        return driver
+
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password, base_url):
-        self.driver = setup_driver()
+        self.driver = self.setup_driver()
         self.base_url = base_url
         self.driver.get(self.base_url)
         self.login_name = login_name
@@ -29,12 +28,13 @@ class Test:
         self.run_test()
 
     # создаём метод для выбора товара и перехода на страницу Корзина
+    def click_and_wait(self,xpath):
+        return WebDriverWait(self.driver, 30).until(
+            EC.presence_of_element_located((By.XPATH,xpath))).click()
     def select_product(self):
-        WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@id='add-to-cart-sauce-labs-backpack']"))).click()
+        self.click_and_wait("//*[@id='add-to-cart-sauce-labs-backpack']")
         print("Click Selected Product")
-        WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.XPATH, "//*[@id='shopping_cart_container']"))).click()
+        self.click_and_wait("//*[@id='shopping_cart_container']")
         print("Enter Shopping Cart")
 
     def checking_cart(self):
