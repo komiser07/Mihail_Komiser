@@ -10,32 +10,22 @@ from selenium.webdriver.support import expected_conditions as EC
 # создаём класс для тестирования
 class Test:
 
-    def setup_driver(self):
-        options = webdriver.EdgeOptions()
-        options.add_experimental_option("detach", True)
-        driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
-        driver.maximize_window()
-        return driver
-
     # создаём конструктор для инициализации экземпляра теста с логином и паролем
     def __init__(self, login_name, login_password, base_url):
-        self.driver = self.setup_driver()
+        options = webdriver.EdgeOptions()
+        options.add_experimental_option("detach", True)
+        self.driver = webdriver.Edge(options=options, service=EdgeService(EdgeChromiumDriverManager().install()))
+        self.driver.maximize_window()
         self.base_url = base_url
         self.driver.get(self.base_url)
         self.login_name = login_name
         self.login_password = login_password
         self.login = LoginPage(self.driver)
-        self.run_test()
 
     # создаём метод для выбора товара и перехода на страницу Корзина
-    def click_and_wait(self,xpath):
+    def click_and_wait(self, xpath):
         return WebDriverWait(self.driver, 30).until(
-            EC.presence_of_element_located((By.XPATH,xpath))).click()
-    def select_product(self):
-        self.click_and_wait("//*[@id='add-to-cart-sauce-labs-backpack']")
-        print("Click Selected Product")
-        self.click_and_wait("//*[@id='shopping_cart_container']")
-        print("Enter Shopping Cart")
+            EC.presence_of_element_located((By.XPATH, xpath))).click()
 
     def checking_cart(self):
         success_test = WebDriverWait(self.driver, 30).until(
@@ -47,8 +37,10 @@ class Test:
     # запускаем тест
     def run_test(self):
         self.login.authorization(self.login_name, self.login_password)
-        self.select_product()
-        self.checking_cart()
+        self.click_and_wait("//*[@id='add-to-cart-sauce-labs-backpack']")
+        print("Click Selected Product")
+        self.click_and_wait("//*[@id='shopping_cart_container']")
+        print("Enter Shopping Cart")
 
     # Создаём метод для закрытия браузера
     def quit(self):
@@ -58,4 +50,6 @@ class Test:
 
 # создаём экземпляр класса и запускаем тест
 start_test = Test('standard_user', 'secret_sauce', 'https://www.saucedemo.com/')
+start_test.run_test()
+start_test.checking_cart()
 start_test.quit()
