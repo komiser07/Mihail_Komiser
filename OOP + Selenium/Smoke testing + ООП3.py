@@ -41,6 +41,7 @@ class Test:
         print("Click Selected Product")
         self.click_and_wait("//*[@id='shopping_cart_container']")
         print("Enter Shopping Cart")
+        self.checking_cart()
 
     # Создаём метод для закрытия браузера
     def quit(self):
@@ -51,5 +52,4 @@ class Test:
 # создаём экземпляр класса и запускаем тест
 start_test = Test('standard_user', 'secret_sauce', 'https://www.saucedemo.com/')
 start_test.run_test()
-start_test.checking_cart()
 start_test.quit()
